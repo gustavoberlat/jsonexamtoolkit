@@ -12,11 +12,17 @@ function createNewFile(file){
 }
 
 
-function findAll(file)
-{
+function findAll(file, numberReturns){
   const data = jsonfile.readFileSync(file);
 
-  return data;
+
+  if(!numberReturns) return data;
+
+  else if(numberReturns){
+    return data.slice(0, numberReturns)
+  }
+
+
 }
 
 
@@ -31,16 +37,21 @@ function findById(file, id){
 
 
 
-function findByCategory(file, category){
+function findByCategory(file, category, numberReturns){
   const data = findAll(file);
 
-  const question = data.filter(question => question.category === category);
+  const questions = data.filter(question => question.category === category);
 
-  return question;
+  if(!numberReturns) return questions;
+
+  else if(numberReturns){
+    return questions.slice(0,numberReturns);
+  }
+
 }
 
 
-function addNewQuestion(file, question){
+function createOne(file, question){
 
   const data = findAll(file);
 
@@ -57,6 +68,7 @@ function addNewQuestion(file, question){
   return question;
 
 }
+
 
 
 function verifyAnswer(file, id, answer){
@@ -86,7 +98,7 @@ const examManager = {
   findAll, 
   findById, 
   findByCategory, 
-  addNewQuestion
+  createOne
 }
 
 
